@@ -1,0 +1,20 @@
+{
+    "name": "i导航",
+    "short_name": "i导航",
+    "icons": [{
+      "src": "/h5-nav/img/navigation.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }],
+    "start_url": "/?from=homescreen",
+    "display": "standalone",
+    "background_color": "#fff",
+    "theme_color": "#000",
+    "orientation": "portrait",
+    "gcm_sender_id": "103953800507",
+    "prefer_related_applications": false,
+    "related_applications": [{
+      "platform": "play",
+      "id": "com.gitee.niefy"
+    }]
+  }
