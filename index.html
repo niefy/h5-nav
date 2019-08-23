@@ -118,7 +118,7 @@
 
 
     if ('serviceWorker' in navigator) {//注册service worker便于离线访问
-        navigator.serviceWorker.register('/h5-nav/js/sw.js').then(function (reg) {
+        navigator.serviceWorker.register('/h5-nav/js/sw.js', { scope: '/h5-nav/' }).then(function (reg) {
             console.log('Registration succeeded. Scope is ' + reg.scope);
         }).catch(function (error) {
             console.log('Registration failed with ' + error);
