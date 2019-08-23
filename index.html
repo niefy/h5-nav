@@ -73,14 +73,12 @@
         text-decoration: none;
     }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/eruda"></script>
-<script>eruda.init();</script>
 <body>
     <div class="app">
         <div class="center">
-            <form action="https://cn.bing.com/search">
-                <input id="input" name="q" type="text" placeholder="搜索或访问网址">
-            </form>
+            
+                <input id="input" name="q" type="text" placeholder="搜索或访问网址" onkeypress="onKeypress(event)">
+            
             <div class="btn-group">
                 <button onclick="search('https://cn.bing.com/search?q=%s')">必应</button>
                 <button onclick="search('https://www.zhihu.com/search?type=content&q=%s')">知乎</button>
@@ -106,14 +104,22 @@
     </div>
 </body>
 <script>
+    function onKeypress(e){
+        if(e.keyCode!=13) return false
+        let text = document.querySelector('#input').value
+        if (/^https?:\/\/\w.\w.*$/.test(text)) {//url 带协议
+            location.href = text
+        }else if(/^\w.\w.*$/.test(text)){//url 不带协议
+            location.href='http://'+text
+        } else {
+            search('https://cn.bing.com/search?q=%s')
+        }
+    }
+
     function search(url) {
         let search = document.querySelector('#input').value
         if (!search) return
-        if (/((http|https):\/\/)?\w\.\w.*$/.test(search)) {//url
-            location.href = search
-        } else {
-            location.href = url.replace('%s', search)
-        }
+        location.href = url.replace('%s', search)
     }
 
 
