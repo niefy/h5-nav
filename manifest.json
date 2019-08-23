@@ -1,11 +1,13 @@
 {
     "name": "i导航",
     "short_name": "i导航",
-    "icons": [{
-      "src": "/h5-nav/img/navigation.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }],
+    "icons": [
+        {
+            "src": "/h5-nav/img/navigation.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
     "start_url": "/?from=homescreen",
     "display": "standalone"
-  }
+}
