@@ -6,8 +6,8 @@ self.addEventListener('install', function (event) {
         caches.open('v1').then(function (cache) {
             return cache.addAll([
                 '/h5-nav/',
-                '/sw-test/index.html',
-                '/sw-test/manifest.json'
+                '/h5-nav/index.html',
+                '/h5-nav/manifest.json'
             ]);
         })
     );
