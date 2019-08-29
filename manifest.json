@@ -10,5 +10,5 @@
     ],
     "background_color": "#2196f3",
     "start_url": "/h5-nav/index.html",
-    "display": "browser"
+    "display": "minimal-ui"
 }
