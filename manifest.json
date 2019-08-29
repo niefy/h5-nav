@@ -8,6 +8,7 @@
             "type": "image/png"
         }
     ],
-    "start_url": "/?from=homescreen",
+    "background_color": "#2196f3",
+    "start_url": "/h5-nav/index.html",
     "display": "standalone"
 }
