@@ -14,16 +14,26 @@
         background: #ffffff;
     }
 
+    @media screen and (min-width: 960px) {
+      body {
+        width: 400px;
+        margin: auto auto;
+      }
+    }
+
     .center {
         margin-top: 150px;
         padding: 10px 10px;
     }
-
+    .center .title{
+        color: #1296db;
+        text-align: center;
+    }
     .center input {
         width: 100%;
         height: 40px;
         border-radius: 20px;
-        border: 2px solid #00A89D;
+        border: 2px solid #1296db;
         outline: none;
         padding: 0 10px;
         box-sizing: border-box;
@@ -38,9 +48,9 @@
     }
 
     .btn-group button {
-        background: #00A89D;
+        background: #1296db;
         border: none;
-        color: #eee;
+        color: #ffffff;
         padding: 6px 8px;
         outline: none;
         box-shadow: none;
@@ -65,7 +75,6 @@
 
     .link-list>li>a {
         display: inline-block;
-        font-size: 15px;
         color: #ffffff;
         word-break: keep-all;
         overflow: hidden;
@@ -76,9 +85,8 @@
 <body>
     <div class="app">
         <div class="center">
-            
-                <input id="input" name="q" type="text" placeholder="搜索或访问网址" onkeypress="onKeypress(event)">
-            
+            <h5 class="title">燕雀导航</h5>
+            <input id="input" name="q" type="text" placeholder="搜索或访问网址" onkeypress="onKeypress(event)">
             <div class="btn-group">
                 <button onclick="search('https://cn.bing.com/search?q=%s')">必应</button>
                 <button onclick="search('https://www.zhihu.com/search?type=content&q=%s')">知乎</button>

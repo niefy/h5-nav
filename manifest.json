@@ -1,14 +1,14 @@
 {
-    "name": "i导航",
-    "short_name": "i导航",
+    "name": "换个干净好用的浏览器主页",
+    "short_name": "燕雀导航",
     "icons": [
         {
             "src": "/h5-nav/img/navigation.png",
-            "sizes": "192x192",
+            "sizes": "200x200",
             "type": "image/png"
         }
     ],
     "background_color": "#2196f3",
     "start_url": "/h5-nav/index.html",
-    "display": "standalone"
+    "display": "browser"
 }
