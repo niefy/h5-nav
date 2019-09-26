@@ -1,0 +1,165 @@
+body, dd, div, dl, dt, fieldset, form, h1, h2, h3, h4, h5, h6, img, input, li, ol, p, table, td, ul {
+  margin: 0;
+  padding: 0
+}
+
+html {
+  height: 100%;
+  font-size: 20px;
+}
+
+body {
+  background-color: #fff;
+  font-family: "微软雅黑";
+  min-height: 100%;
+  padding-bottom: 4.1rem;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+h2, h3 {
+  font-weight: normal
+}
+[v-cloak] {
+  display: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none
+}
+
+input, select, textarea {
+  outline: none;
+  border: none;
+  background: none
+}
+
+input {
+  -webkit-appearance: none
+}
+
+textarea {
+  resize: none
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+  font-size: 0.7rem
+}
+
+img {
+  border: none;
+  vertical-align: top
+}
+
+
+.header {
+  background-color: #fff;
+  padding-bottom: 0.05rem;
+  padding: 0.1rem 0;
+}
+
+/* 搜索框 */
+.header .search{
+  display: flex;
+  justify-content: center;
+  height: 1.7rem;
+  border: 1px solid #A0716F;
+  width: 90%;
+  margin: 1rem auto;
+  overflow: hidden;
+}
+.header .search-select{
+  border: none;
+  padding: 0 0.5rem;
+  background: #A0716F;
+  color: #FFFFFF;
+}
+.header .search-input {
+  margin: 0 auto;
+  border: none;
+  font-size: 0.7rem;
+  padding-left: 0.4rem;
+  box-sizing: border-box;
+  flex-grow:1;
+}
+.header .search-btn {
+  background: #A0716F;
+  color: #fff;
+  border: none;
+  height: 1.7rem;
+  min-width: 3rem;
+  letter-spacing: 0.2rem;
+}
+
+/* 目录列表 */
+.header .category-head{
+  display: flex;
+  justify-content: space-around;
+  padding: 0.5rem 2rem;
+  background: #eee;
+}
+.header .category-head li {
+  font-size: 0.7rem;
+  
+  font-weight: bold;
+  line-height: 1.2rem;
+}
+
+.header .category-head li.on{
+  color: #A0716F;
+  border-bottom: 2px solid #A0716F;
+}
+
+
+.section h3 {
+  font-size: 0.7rem;
+  color: #A0716F;
+  font-weight: bold;
+  margin-left: 0.466667rem;
+  height: 2rem;
+  line-height: 2rem;
+  border-bottom: 0.05rem solid #f0f0f0
+}
+
+.section h3 span {
+  border-left: 0.083333rem solid #A0716F;
+  padding-left: 0.333333rem
+}
+
+.section li {
+  display: inline-block;
+  width: 30%;
+  height: 2rem;
+  line-height: 2rem;
+  text-align: center;
+}
+
+.section li a {
+  display: block
+}
+
+footer {
+  height: 4rem;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%
+}
+
+.footer {
+  padding: 1rem 1rem;
+  
+}
+.footer p{
+  font-size: 0.7rem;
+  line-height: 1.2rem;
+  color: #666;
+}
+
+.footer p a {
+  color: #A0716F;
+}

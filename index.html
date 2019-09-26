@@ -8,130 +8,64 @@
     <title>燕雀导航 - 做个干净好用的手机导航</title>
     <link rel="icon" href="./img/navigation.png">
     <link rel="manifest" href="./manifest.json">
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-<style>
-    html,
-    body {
-        background: #ffffff;
-    }
-
-    @media screen and (min-width: 960px) {
-      body {
-        width: 400px;
-        margin: auto auto;
-      }
-    }
-
-    .center {
-        margin-top: 150px;
-        padding: 10px 10px;
-    }
-    .center .title{
-        color: #1296db;
-        text-align: center;
-    }
-    .center input {
-        width: 100%;
-        height: 40px;
-        border-radius: 20px;
-        border: 2px solid #1296db;
-        outline: none;
-        padding: 0 10px;
-        box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-    }
-
-    .btn-group {
-        display: flex;
-        justify-content: space-between;
-        padding: 10px 10px;
-    }
-
-    .btn-group button {
-        background: #1296db;
-        border: none;
-        color: #ffffff;
-        padding: 6px 8px;
-        outline: none;
-        box-shadow: none;
-    }
-
-    .link-list {
-        display: flex;
-        flex-wrap: wrap;
-        margin: 0;
-        padding: 0;
-        margin-top: 30px;
-    }
-
-    .link-list>li {
-        background: #999999;
-        border: 1px solid #ffffff;
-        border-radius: 10px;
-        text-align: center;
-        list-style: none;
-        margin: 5px 5px;
-    }
-
-    .link-list>li>a {
-        display: inline-block;
-        color: #ffffff;
-        word-break: keep-all;
-        overflow: hidden;
-        padding: 6px 8px;
-        text-decoration: none;
-    }
-</style>
 <body>
-    <div class="app">
-        <div class="center">
-            <h5 class="title">燕雀导航</h5>
-            <input id="input" name="q" type="text" placeholder="搜索或访问网址" onkeypress="onKeypress(event)">
-            <div class="btn-group">
-                <button onclick="search('https://cn.bing.com/search?q=%s')">必应</button>
-                <button onclick="search('https://www.zhihu.com/search?type=content&q=%s')">知乎</button>
-                <button onclick="search('https://www.baidu.com/s?word=%s')">百度</button>
-                <button onclick="search('https://www.sogou.com/web?query=%s')">搜狗</button>
+    <div id="app">
+        <div class="header">
+            <div class="search">
+                <select class="search-select" v-model="enginUrl" v-cloak>
+                    <option v-for="(value,key) in searchEngines" :key="key" :value="value">{{key}}</option>
+                </select>
+                <input class="search-input" type="text" v-model="keywords" placeholder="关键词">
+                <button class="search-btn" @click="search">搜索</button>
             </div>
+            <ul class="category-head">
+                <li v-for="category in bookmarks" :class="{'on':active==category.category}"
+                    @click="active=category.category"  v-cloak>{{category.category}}</li>
+            </ul>
         </div>
-        <ul class="link-list">
-            <li><a href="https://news.futunn.com/mobile/market">富途要闻</a></li>
-            <li><a href="https://coolapk.com/apk/">酷安</a></li>
-            <li><a href="https://m.weibo.cn/">微博</a></li>
-            <li><a href="https://36kr.com/">36氪</a></li>
-            <li><a href="https://m.gwdang.com/">购物党</a></li>
-            <li><a href="https://app.xiaomiyoupin.com/main">小米有品</a></li>
-            <li><a href="http://you.163.com/">网易严选</a></li>
-            <li><a href="http://m.ilxdh.com/">龙轩导航</a></li>
-            <li><a href="http://ifkdy.com/">影师搜索</a></li>
-            <li><a href="https://3g.163.com/touch/auto/">网易汽车</a></li>
-            <li><a href="https://m.douguo.com/">豆果美食</a></li>
-            <li><a href="https://edition.cnn.com/world">CNN新闻</a></li>
-            <li><a href="http://m.xinhuanet.com/">新华网</a></li>
-            <li><a href="http://m.huanqiu.com/">环球网</a></li>
-        </ul>
+        <div class="main">
+            <ul v-for="category in bookmarks" v-show="active==category.category">
+                <li  v-cloak>
+                    <section class="section" v-for="group in category.groups">
+                        <h3><span>{{group.groupName}}</span></h3>
+                        <ul>
+                            <li v-for="item in group.list">
+                                <a :href="item.href">{{item.name}}</a>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer">
+        <p>本页支持离线访问，所有数据存储在本地（清空缓存会清除数据）- <a href="https://gitee.com/niefy/h5-nav">源码地址</a></p>
     </div>
 </body>
+<script src="./js/vue.min.js"></script>
+<script src="./js/data.js"></script>
 <script>
-    function onKeypress(e){
-        if(e.keyCode!=13) return false
-        let text = document.querySelector('#input').value
-        if (/^https?:\/\/\w.\w.*$/.test(text)) {//url 带协议
-            location.href = text
-        }else if(/^\w.\w.*$/.test(text)){//url 不带协议
-            location.href='http://'+text
-        } else {
-            search('https://cn.bing.com/search?q=%s')
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            keywords: '',
+            bookmarks: [],
+            active: '',
+            searchEngines: SEARCH_ENGINES,
+            enginUrl: SEARCH_ENGINES['必应']
+        },
+        mounted() {
+            this.bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || DEFAULT_BOOKMARKS;
+            this.active = this.bookmarks[0].category;
+        },
+        methods: {
+            search() {
+                window.location.href = this.enginUrl.replace('%s', this.keywords);
+            }
         }
-    }
-
-    function search(url) {
-        let search = document.querySelector('#input').value
-        if (!search) return
-        location.href = url.replace('%s', search)
-    }
-
+    });
 
     if ('serviceWorker' in navigator) {//注册service worker便于离线访问
         navigator.serviceWorker.register('/h5-nav/sw.js').then(function (reg) {
