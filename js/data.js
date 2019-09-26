@@ -16,9 +16,7 @@ const DEFAULT_BOOKMARKS = [{
             {href:"https://leetcode-cn.com/explore/",name:"LeetCode"},
             {href:"https://edition.cnn.com/world",name:"CNN新闻"},
             {href:"http://m.xinhuanet.com/",name:"新华网"},
-            {href:"http://m.huanqiu.com/",name:"环球网"},
-            {href:"http://note.youdao.com/wap/index.html#/home/recent",name:"有道云笔记"},
-            {href:"https://h5.m.taobao.com/?sprefer=sypc00",name:"淘宝"},
+            {href:"http://m.huanqiu.com/",name:"环球网"}
             
         ]
     }, {
@@ -31,17 +29,9 @@ const DEFAULT_BOOKMARKS = [{
             {href: "http://www.geekpark.net/", name: "极客公园"},
             {href: "https://www.huxiu.com/", name: "虎嗅网"},
             {href: "http://www.leiphone.com/", name: "雷锋网"},
-            {href: "http://tech.sina.com.cn/", name: "新浪科技"},
-            {href: "http://tech.qq.com/", name: "腾讯科技"},
-            {href: "http://tech.ifeng.com/", name: "凤凰科技"},
-            {href: "http://www.zol.com.cn/", name: "中关村在线"},
-            {href: "http://news.mydrivers.com/", name: "驱动之家"},
-            {href: "http://www.ithome.com/", name: "IT之家"},
-            {href: "http://www.tmtpost.com/", name: "钛媒体"},
             {href: "http://www.cnetnews.com.cn/", name: "CNET科技资讯"},
             {href: "http://www.iheima.com/", name: "i黑马"},
-            {href: "http://www.pingwest.com/", name: "品玩"},
-            {href: "https://madbrief.com/", name: "疯狂简报"}
+            {href: "http://www.pingwest.com/", name: "品玩"}
         ]
     }]
 },{
@@ -51,16 +41,9 @@ const DEFAULT_BOOKMARKS = [{
         list: [
             {href:"http://study.163.com/",name:"网易云课堂"},
             {href:"http://www.imooc.com/",name:"慕课网"},
-            {href:"http://www.ycku.com/",name:"瓢城Web俱乐部"},
-            {href:"http://doyoudo.com",name:"doyoudo"},
             {href:"http://www.icourse163.org/",name:"中国大学MOOC"},
-            {href:"https://www.shiyanlou.com/courses/",name:"实验楼"},
             {href:"https://ke.qq.com/",name:"腾讯课堂"},
             {href:"http://open.163.com/",name:"网易公开课"},
-            {href:"http://www.jisuanke.com/",name:"计蒜客"},
-            {href:"http://mooc.guokr.com/",name:"MOOC学院"},
-            {href:"http://www.51zxw.net/",name:"我要自学网"},
-            {href:"http://www.duobei.com/",name:"多贝"},
             {href:"https://www.coursera.org/",name:"Coursera"},
             {href:"http://www.icourses.cn/home/",name:"爱课程"},
             {href:"http://oeasy.org/",name:"Oeasy系列"},
@@ -68,8 +51,7 @@ const DEFAULT_BOOKMARKS = [{
             {href:"http://www.howzhi.com/",name:"好知网"},
             {href:"http://www.wanmen.org/",name:"万门大学"},
             {href:"http://www.yun.lu/",name:"云路课堂"},
-            {href:"http://www.haoxue.com/",name:"好学网"},
-            {href:"http://www.gogoup.com/course/list",name:"高高手"}
+            {href:"http://www.haoxue.com/",name:"好学网"}
         ]
     }, {
         groupName: '教育学习',
