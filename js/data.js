@@ -13,7 +13,6 @@ const DEFAULT_BOOKMARKS = [{
             {href:"http://drugs.dxy.cn/index.htm",name:"丁香园用药助手"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
             {href:"https://coolapk.com/apk/",name:"酷安网"},
-            {href:"https://leetcode-cn.com/explore/",name:"LeetCode"},
             {href:"https://edition.cnn.com/world",name:"CNN新闻"},
             {href:"http://m.xinhuanet.com/",name:"新华网"},
             {href:"http://m.huanqiu.com/",name:"环球网"}
@@ -33,7 +32,17 @@ const DEFAULT_BOOKMARKS = [{
             {href: "http://www.iheima.com/", name: "i黑马"},
             {href: "http://www.pingwest.com/", name: "品玩"}
         ]
+    },{
+        groupName: '最新电影',
+        list: [
+            {href:"http://ifkdy.com/",name:"疯狂电影搜索"},
+            {href:"http://www.ck180.net/",name:"CK电影部落"},
+            {href:"http://qukantv.net/",name:"去看TV网"},
+            {href:"http://www.zhuimj.cn/",name:"追美剧网"},
+            {href:"http://m.kankanwu.com/",name:"看看屋"},
+        ]
     }]
+    
 },{
     category: '学习',
     groups: [{
@@ -45,13 +54,8 @@ const DEFAULT_BOOKMARKS = [{
             {href:"https://ke.qq.com/",name:"腾讯课堂"},
             {href:"http://open.163.com/",name:"网易公开课"},
             {href:"https://www.coursera.org/",name:"Coursera"},
-            {href:"http://www.icourses.cn/home/",name:"爱课程"},
-            {href:"http://oeasy.org/",name:"Oeasy系列"},
-            {href:"http://www.ibeifeng.com/",name:"北风网"},
             {href:"http://www.howzhi.com/",name:"好知网"},
-            {href:"http://www.wanmen.org/",name:"万门大学"},
-            {href:"http://www.yun.lu/",name:"云路课堂"},
-            {href:"http://www.haoxue.com/",name:"好学网"}
+            {href:"https://leetcode-cn.com/explore/",name:"LeetCode"}
         ]
     }, {
         groupName: '教育学习',
@@ -65,99 +69,30 @@ const DEFAULT_BOOKMARKS = [{
     },{
         groupName: '设计素材',
         list: [
-            {href:"http://hao.uisdc.com/",name:"设计师网址导航1"},
-            {href:"http://www.userinterface.com.cn/",name:"设计师网址导航2"},
-            {href:"http://hao.xueui.cn/",name:"ui设计导航"},
+            {href:"http://hao.uisdc.com/",name:"优设导航"},
             {href:"http://hao.shejidaren.com/",name:"设计导航"},
             {href:"http://www.niudana.com/",name:"牛大拿设计导航"},
             {href:"http://hao.psefan.com/",name:"饭团导航"}
         ]
     }]
 },{
-    category: '影视',
-    groups: [{
-        groupName: '最新电影',
-        list: [
-            {href:"http://ifkdy.com/",name:"疯狂电影搜索"},
-            {href:"http://goudidiao.com/",name:"vip视频解析"},
-            {href:"http://xlyy100.com/",name:"降龙影院"},
-            {href:"http://www.pniao.com/",name:"胖鸟电影"},
-            {href:"http://www.xunyingwang.com/",name:"迅影网"},
-            {href:"http://neets.cc/",name:"neets"},
-            {href:"http://www.dygod.net/",name:"电影天堂"},
-            {href:"http://www.bd-film.com/",name:"BD影视"},
-            {href:"https://www.lsjdyw.net/",name:"老司机电影网"},
-            {href:"http://www.66ys.tv/",name:"66影视"},
-            {href:"http://www.ck180.net/",name:"CK电影部落"},
-            {href:"http://www.loldytt.com/",name:"LOL电影天堂"},
-            {href:"http://qukantv.net/",name:"去看TV网"},
-            {href:"http://www.zhuimj.cn/",name:"追美剧网"},
-            {href:"http://www.lbldy.com/",name:"龙部落"},
-            {href:"http://www.dygang.net/",name:"电影港"},
-            {href:"http://www.piaohua.com/",name:"飘花电影"},
-            {href:"http://www.xiaohx.net/",name:"小浣熊"},
-            {href:"http://www.yugaopian.cn/",name:"预告片世界"},
-            {href:"http://www.kankanwu.com/",name:"看看屋"},
-        ]
-    }]
-},{
     category: '工具',
     groups: [{
-        groupName: '便携APP',
-        list: [
-            {href:"https://c.runoob.com/front-end/686",name:"密码生成"},
-            {href:"http://www.wandoujia.com/award",name:"豌豆荚设计奖"},
-            {href:"http://app.mi.com/subjectList",name:"小米专题"},
-            {href:"http://www.anzhi.com/subjects_1.html",name:"安智专题"},
-            {href:"http://news.d.cn/special.html",name:"当乐手游专题"},
-            {href:"http://apk.gfan.com/topics-1.shtml",name:"机锋精选专题"},
-            {href:"http://www.appchina.com/column_list/1",name:"汇说专栏"},
-            {href:"http://zuimeia.com/",name:"最美应用"},
-            {href:"http://bbs.zhiyoo.com/",name:"智友论坛"},
-            {href:"https://forum.xda-developers.com/",name:"XDA社区"},
-            {href:"https://sspai.com/",name:"少数派"},
-            {href:"http://www.appinn.com/",name:"小众软件"},
-            {href:"http://www.appnz.com/",name:"爱屁屁"},
-            {href:"http://pinapps.in/",name:"Pinapps"},
-            {href:"http://appdp.com/",name:"APP每日推送"},
-            {href:"http://app.dgtle.com/",name:"数字尾巴"},
-            {href:"http://www.qdaily.com/tags/1288.html",name:"好奇心日报"},
-            {href:"http://next.36kr.com/posts",name:"NEXT"},
-            {href:"http://www.wooaii.com/",name:"我爱玩应用"}
-        ]
-    }, {
         groupName: '网盘搜索',
         list: [
             {href:"http://www.quzhuanpan.com/",name:"去转盘网"},
             {href:"https://www.panc.cc/",name:"胖次搜索"},
             {href:"https://www.ttyunsou.com/",name:"天天云搜"},
-            {href:"http://wangpan007.com/",name:"网盘007"},
-            {href:"http://www.tuoniao.me/",name:"鸵鸟搜索"},
             {href:"http://www.58wangpan.com/",name:"58网盘搜索"},
-            {href:"http://www.biliworld.com/",name:"哔哩搜索"},
-            {href:"http://www.panduoduo.net/",name:"盘多多"},
-            {href:"http://www.wodepan.com/",name:"我的盘"},
-            {href:"http://www.sobaidupan.com/",name:"搜百度盘"},
-            {href:"http://www.tebaidu.com/",name:"特百度"},
-            {href:"http://wangpan.renrensousuo.com/",name:"众人搜索"}
+            {href:"http://m.rufengso.net/",name:"如风搜"}
         ]
     },{
         groupName: '精致导航',
         list: [
             {href:"http://ilxdh.com/",name:"龙轩导航"},
-            {href:"https://www.chaidu.com/",name:"柴都导航"},
-            {href:"http://www.gitnavi.com/",name:"GitNavi"},
-            {href:"http://byr.wiki/",name:"北邮人导航"},
-            {href:"http://mwlmt.cc/d/",name:"五花八门导航"},
             {href:"http://gate.guokr.com/",name:"果壳任意门"},
-            {href:"http://qianshan.co/",name:"千山导航"},
             {href:"http://www.xiaolvji.com/",name:"效率集"},
-            {href:"http://www.miguyu.com/",name:"咪咕鱼导航"},
-            {href:"http://hao.199it.com/",name:"大数据导航"},
-            {href:"http://www.haoyonghaowan.com/",name:"好用好玩导航"},
-            {href:"http://www.24kdh.com/",name:"24K导航"},
-            {href:"http://www.lian81.com/",name:"超链网"},
-            {href:"http://wxbbx.jh1z.com/",name:"微信百宝箱"}
+            {href:"http://hao.199it.com/",name:"199IT大数据导航"}
         ]
     }]
 }];
@@ -168,5 +103,6 @@ const DEFAULT_BOOKMARKS = [{
 const SEARCH_ENGINES={
     '百度':'https://www.baidu.com/s?wd=%s',
     '必应':'http://cn.bing.com/search?q=%s',
-    '搜狗':'http://m.sogou.com/web/searchList.jsp?keyword=%s'
+    '搜狗':'http://m.sogou.com/web/searchList.jsp?keyword=%s',
+    '知乎':'https://www.zhihu.com/search?type=content&q=%s'
 };
