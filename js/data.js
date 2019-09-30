@@ -10,7 +10,6 @@ const DEFAULT_BOOKMARKS = [{
             {href: "https://news.futunn.com/mobile/market", name: "富途要闻"},
             {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
             {href:"https://m.dxy.com/column",name:"丁香医生"},
-            {href:"http://drugs.dxy.cn/index.htm",name:"丁香园用药助手"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
             {href:"https://coolapk.com/apk/",name:"酷安网"},
             {href:"https://edition.cnn.com/world",name:"CNN新闻"},
@@ -28,7 +27,6 @@ const DEFAULT_BOOKMARKS = [{
             {href: "http://www.geekpark.net/", name: "极客公园"},
             {href: "https://www.huxiu.com/", name: "虎嗅网"},
             {href: "http://www.leiphone.com/", name: "雷锋网"},
-            {href: "http://www.cnetnews.com.cn/", name: "CNET科技资讯"},
             {href: "http://www.iheima.com/", name: "i黑马"},
             {href: "http://www.pingwest.com/", name: "品玩"}
         ]
