@@ -46,7 +46,7 @@ const DEFAULT_BOOKMARKS = [{
 },{
     category: '学习',
     groups: [{
-        groupName: 'IT',
+        groupName: '自学',
         list: [
             {href:"http://study.163.com/",name:"网易云课堂"},
             {href:"http://www.imooc.com/",name:"慕课网"},
@@ -56,15 +56,6 @@ const DEFAULT_BOOKMARKS = [{
             {href:"https://www.coursera.org/",name:"Coursera"},
             {href:"http://www.howzhi.com/",name:"好知网"},
             {href:"https://leetcode-cn.com/explore/",name:"LeetCode"}
-        ]
-    }, {
-        groupName: '教育学习',
-        list: [
-            {href:"http://www.1nami.com/",name:"1纳米学习导航"},
-            {href:"http://kbs.cnki.net/",name:"学术网站大全"},
-            {href:"http://123.paomianba.com/",name:"泡面吧"},
-            {href:"http://dh.xdf.cn/",name:"新东方教育导航"},
-            {href:"http://www.yywz123.com/",name:"英语学习大全"}
         ]
     },{
         groupName: '设计素材',
