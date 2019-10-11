@@ -14,11 +14,10 @@
     <div id="app">
         <div class="header">
             <div class="search">
-                <select class="search-select" v-model="enginUrl" v-cloak>
-                    <option v-for="(value,key) in searchEngines" :key="key" :value="value">{{key}}</option>
-                </select>
                 <input class="search-input" type="text" v-model="keywords" placeholder="关键词">
-                <button class="search-btn" @click="search">搜索</button>
+                <div class="search-btns">
+                    <button class="search-btn" @click="search(enginUrl)" v-for="(enginUrl,name) in searchEngines" :key="name">{{name}}</button>
+                </div>
             </div>
             <ul class="category-head">
                 <li v-for="category in bookmarks" :class="{'on':active==category.category}"
@@ -53,16 +52,15 @@
             keywords: '',
             bookmarks: [],
             active: '',
-            searchEngines: SEARCH_ENGINES,
-            enginUrl: SEARCH_ENGINES['知乎']
+            searchEngines: SEARCH_ENGINES
         },
         mounted() {
             this.bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || DEFAULT_BOOKMARKS;
             this.active = this.bookmarks[0].category;
         },
         methods: {
-            search() {
-                window.location.href = this.enginUrl.replace('%s', this.keywords);
+            search(enginUrl) {
+                window.location.href = enginUrl.replace('%s', this.keywords);
             }
         }
     });
