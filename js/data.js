@@ -54,7 +54,8 @@ const DEFAULT_BOOKMARKS = [{
             {href:"http://open.163.com/",name:"网易公开课"},
             {href:"https://www.coursera.org/",name:"Coursera"},
             {href:"http://www.howzhi.com/",name:"好知网"},
-            {href:"https://leetcode-cn.com/explore/",name:"LeetCode"}
+            {href:"https://leetcode-cn.com/explore/",name:"LeetCode"},
+            {href:"http://cn.epubee.com/files.aspx",name:"EPUBEE"},
         ]
     },{
         groupName: '设计素材',
