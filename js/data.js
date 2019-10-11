@@ -7,6 +7,7 @@ const DEFAULT_BOOKMARKS = [{
             {href: "https://juejin.im/", name: "掘金"},
             {href: "https://m.weibo.cn/?jumpfrom=wapv4&tip=1", name: "微博"},
             {href: "https://xueqiu.com/#/", name: "雪球"},
+            {href: "https://m.zhitongcaijing.com/", name: "智通财经"},
             {href: "https://news.futunn.com/mobile/market", name: "富途要闻"},
             {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
             {href:"https://m.dxy.com/column",name:"丁香医生"},
