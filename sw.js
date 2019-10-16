@@ -1,4 +1,4 @@
-const version="v2.8"
+const version="v2.9"
 
 /**
  * service worker离线缓存配置
