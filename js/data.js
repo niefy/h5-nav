@@ -12,21 +12,21 @@ const DEFAULT_BOOKMARKS = [{
             {href:"https://m.dxy.com/column",name:"丁香医生"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
             {href:"https://coolapk.com/apk/",name:"酷安网"},
-            {href:"https://edition.cnn.com/world",name:"CNN新闻"},
-            {href:"http://m.xinhuanet.com/",name:"新华网"},
-            {href:"http://m.huanqiu.com/",name:"环球网"}
+            
+            
             
         ]
     }, {
-        groupName: 'IT资讯',
+        groupName: '资讯',
         list: [
-            {href: "http://www.cnbeta.com/", name: "cnBeta"},
+            {href:"https://edition.cnn.com/world",name:"CNN新闻"},
+            {href:"http://m.xinhuanet.com/",name:"新华网"},
+            {href:"http://m.huanqiu.com/",name:"环球网"},
             {href: "http://m.qdaily.com/", name: "好奇心日报"},
             {href: "http://www.ifanr.com/", name: "爱范儿"},
             {href: "http://36kr.com/", name: "36 氪"},
             {href: "http://www.geekpark.net/", name: "极客公园"},
             {href: "https://www.huxiu.com/", name: "虎嗅网"},
-            {href: "http://www.leiphone.com/", name: "雷锋网"},
             {href: "http://www.iheima.com/", name: "i黑马"},
             {href: "http://www.pingwest.com/", name: "品玩"}
         ]
@@ -34,9 +34,7 @@ const DEFAULT_BOOKMARKS = [{
         groupName: '最新电影',
         list: [
             {href:"http://ifkdy.com/",name:"疯狂电影搜索"},
-            {href:"http://www.ck180.net/",name:"CK电影部落"},
             {href:"http://qukantv.net/",name:"去看TV网"},
-            {href:"http://www.zhuimj.cn/",name:"追美剧网"},
             {href:"http://m.kankanwu.com/",name:"看看屋"},
         ]
     }]
