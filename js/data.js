@@ -3,6 +3,7 @@ const DEFAULT_BOOKMARKS = [{
     groups: [{
         groupName: '常用',
         list: [
+            {href:"https://www.yuque.com/dashboard/books",name:"语雀"},
             {href: "https://www.zhihu.com/", name: "知乎"},
             {href: "https://juejin.im/", name: "掘金"},
             {href: "https://m.weibo.cn/?jumpfrom=wapv4&tip=1", name: "微博"},
@@ -11,14 +12,12 @@ const DEFAULT_BOOKMARKS = [{
             {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
             {href:"https://m.dxy.com/column",name:"丁香医生"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
-            {href:"https://coolapk.com/apk/",name:"酷安网"},
-            
-            
-            
+            {href:"https://coolapk.com/apk/",name:"酷安网"}
         ]
     }, {
         groupName: '资讯',
         list: [
+            {href: "https://wallstreetcn.com/news/global", name: "华尔街见闻"},
             {href:"https://edition.cnn.com/world",name:"CNN新闻"},
             {href:"http://m.xinhuanet.com/",name:"新华网"},
             {href:"http://m.huanqiu.com/",name:"环球网"},
@@ -33,9 +32,9 @@ const DEFAULT_BOOKMARKS = [{
     },{
         groupName: '最新电影',
         list: [
-            {href:"http://ifkdy.com/",name:"疯狂电影搜索"},
-            {href:"http://qukantv.net/",name:"去看TV网"},
-            {href:"http://m.kankanwu.com/",name:"看看屋"},
+            {href:"https://www.bilibili.com/",name:"bilibili"},
+            {href:"https://www.renren.pro/",name:"人人影视"},
+            {href:"http://xijing.tv/",name:"XiJing"},
         ]
     }]
     
@@ -77,7 +76,7 @@ const DEFAULT_BOOKMARKS = [{
     },{
         groupName: '精致导航',
         list: [
-            {href:"http://ilxdh.com/",name:"龙轩导航"},
+            {href:"http://m.ilxdh.com/",name:"龙轩导航"},
             {href:"http://gate.guokr.com/",name:"果壳任意门"},
             {href:"http://www.xiaolvji.com/",name:"效率集"},
             {href:"http://hao.199it.com/",name:"199IT大数据导航"}
