@@ -7,27 +7,23 @@ const DEFAULT_BOOKMARKS = [{
             {href: "https://www.zhihu.com/", name: "知乎"},
             {href: "https://juejin.im/", name: "掘金"},
             {href: "https://m.weibo.cn/?jumpfrom=wapv4&tip=1", name: "微博"},
-            {href: "https://xueqiu.com/#/", name: "雪球"},
-            {href: "https://news.futunn.com/mobile/market", name: "富途要闻"},
-            {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
-            {href:"https://m.dxy.com/column",name:"丁香医生"},
+            {href:"https://m.dxy.com/",name:"丁香医生"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
-            {href:"https://coolapk.com/apk/",name:"酷安网"}
+            {href:"https://coolapk.com/apk/",name:"酷安网"},
+            {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
         ]
     }, {
         groupName: '资讯',
         list: [
             {href: "https://wallstreetcn.com/news/global", name: "华尔街见闻"},
-            {href:"https://edition.cnn.com/world",name:"CNN新闻"},
-            {href:"http://m.xinhuanet.com/",name:"新华网"},
-            {href:"http://m.huanqiu.com/",name:"环球网"},
             {href: "http://m.qdaily.com/", name: "好奇心日报"},
-            {href: "http://www.ifanr.com/", name: "爱范儿"},
             {href: "http://36kr.com/", name: "36 氪"},
             {href: "http://www.geekpark.net/", name: "极客公园"},
             {href: "https://www.huxiu.com/", name: "虎嗅网"},
-            {href: "http://www.iheima.com/", name: "i黑马"},
-            {href: "http://www.pingwest.com/", name: "品玩"}
+            {href: "https://m.8btc.com/", name: "8比特"},
+            {href: "https://m.feixiaohaozh.info/news/flash.html", name: "非小号"},
+            {href: "https://news.futunn.com/mobile/market", name: "富途要闻"},
+            {href: "https://xueqiu.com/#/", name: "雪球"},
         ]
     },{
         groupName: '最新电影',
@@ -65,13 +61,13 @@ const DEFAULT_BOOKMARKS = [{
 },{
     category: '工具',
     groups: [{
-        groupName: '网盘搜索',
+        groupName: '资源搜索',
         list: [
-            {href:"http://www.quzhuanpan.com/",name:"去转盘网"},
+            {href:"https://www.nmme.cc/",name:"橘子盘搜"},
             {href:"https://www.panc.cc/",name:"胖次搜索"},
             {href:"https://www.ttyunsou.com/",name:"天天云搜"},
             {href:"http://www.58wangpan.com/",name:"58网盘搜索"},
-            {href:"http://m.rufengso.net/",name:"如风搜"}
+            {href:"http://m.rufengso.net/",name:"如风搜"},
         ]
     },{
         groupName: '精致导航',

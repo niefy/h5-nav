@@ -1,4 +1,4 @@
-const version="v2.91"
+const version="v2023.03.13"
 
 /**
  * service worker离线缓存配置
