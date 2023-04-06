@@ -9,8 +9,7 @@ const DEFAULT_BOOKMARKS = [{
             {href: "https://m.weibo.cn/?jumpfrom=wapv4&tip=1", name: "微博"},
             {href:"https://m.dxy.com/",name:"丁香医生"},
             {href:"https://m.douguo.com/?f=www",name:"豆果美食"},
-            {href:"https://coolapk.com/apk/",name:"酷安网"},
-            {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
+            {href:"https://www.yixi.tv/wx/h5/#/speech",name:"一席"},
         ]
     }, {
         groupName: '资讯',
@@ -76,6 +75,13 @@ const DEFAULT_BOOKMARKS = [{
             {href:"http://gate.guokr.com/",name:"果壳任意门"},
             {href:"http://www.xiaolvji.com/",name:"效率集"},
             {href:"http://hao.199it.com/",name:"199IT大数据导航"}
+        ]
+    },{
+        groupName: '在线工具',
+        list: [
+            {href:"https://coolapk.com/apk/",name:"酷安网"},
+            {href:"https://c.runoob.com/front-end/686",name:"随机密码生成器"},
+            {href:"https://c.runoob.com/",name:"菜鸟工具"},
         ]
     }]
 }];
