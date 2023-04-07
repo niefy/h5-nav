@@ -34,7 +34,6 @@ const DEFAULT_BOOKMARKS = [
         list: [
             { href: "http://study.163.com/", name: "网易云课堂" },
             { href: "http://www.imooc.com/", name: "慕课网" },
-            { href: "http://www.icourse163.org/", name: "中国大学MOOC" },
             { href: "https://ke.qq.com/", name: "腾讯课堂" },
             { href: "http://open.163.com/", name: "网易公开课" },
             { href: "https://www.coursera.org/", name: "Coursera" },
@@ -47,7 +46,7 @@ const DEFAULT_BOOKMARKS = [
         list: [
             { href: "http://hao.uisdc.com/", name: "优设导航" },
             { href: "http://hao.shejidaren.com/", name: "设计导航" },
-            { href: "http://www.niudana.com/", name: "牛大拿设计导航" },
+            { href: "http://www.niudana.com/", name: "牛大拿导航" },
             { href: "http://hao.psefan.com/", name: "饭团导航" }
         ]
     }, {
@@ -65,13 +64,13 @@ const DEFAULT_BOOKMARKS = [
             { href: "http://m.ilxdh.com/", name: "龙轩导航" },
             { href: "http://gate.guokr.com/", name: "果壳任意门" },
             { href: "http://www.xiaolvji.com/", name: "效率集" },
-            { href: "http://hao.199it.com/", name: "199IT大数据导航" }
+            { href: "http://hao.199it.com/", name: "199IT导航" }
         ]
     }, {
         groupName: '在线工具',
         list: [
             { href: "https://coolapk.com/apk/", name: "酷安网" },
-            { href: "https://c.runoob.com/front-end/686", name: "随机密码生成器" },
+            { href: "https://c.runoob.com/front-end/686", name: "随机密码生成" },
             { href: "https://c.runoob.com/", name: "菜鸟工具" },
         ]
     }
