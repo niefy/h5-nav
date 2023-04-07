@@ -172,3 +172,10 @@ img {
 .footer p a {
   color: #fff;
 }
+
+/* 深色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .section li a {
+    background: #293550;
+  }
+}
