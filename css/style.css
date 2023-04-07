@@ -151,6 +151,7 @@ img {
   color: #fff;
   font-weight: 500;
   background: #293550;
+  border-radius: 5px;
   text-align: left;
   padding: 5px 10px;
   text-overflow: ellipsis;
