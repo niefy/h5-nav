@@ -14,10 +14,10 @@
     <div id="app">
         <div class="header">
             <div class="search">
-                <input class="search-input" type="text" v-model="keywords" placeholder="关键词" @keyup.enter="search(searchEngines[0].url)">
-                <div class="search-btns">
-                    <button class="search-btn" @click="search(engin.url)" v-for="engin in searchEngines">{{engin.name}}</button>
-                </div>
+                <select class="search-select" v-model="enginUrl" title="enginUrl">
+                    <option v-for="engin in searchEngines" :value="engin.url">{{engin.name}}</option>
+                </select>
+                <input class="search-input" type="text" v-model="keywords" placeholder="输入关键词搜索" @keyup.enter="search()">
             </div>
         </div>
         <div class="main">
@@ -44,15 +44,16 @@
             keywords: '',
             bookmarks: [],
             active: '',
-            searchEngines: SEARCH_ENGINES
+            searchEngines: SEARCH_ENGINES,
+            enginUrl:SEARCH_ENGINES[0].url
         },
         mounted() {
             this.bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || DEFAULT_BOOKMARKS;
             this.active = this.bookmarks[0].category;
         },
         methods: {
-            search(enginUrl) {
-                window.location.href = enginUrl.replace('%s', this.keywords);
+            search() {
+                window.location.href = this.enginUrl.replace('%s', this.keywords);
             }
         }
     });

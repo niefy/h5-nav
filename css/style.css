@@ -88,39 +88,34 @@ img {
 
 /* 搜索框 */
 .header .search {
-  padding: 1rem;
-  
+  display: block;
+  border: 1px solid #ccc;
+  border-radius: 35px;
+  color: #fff;
+  margin: 30px 15px;
 }
 
-.header .search-input {
-  width: 100%;
+.search .search-select{
+  border: none;
+  padding: 5px 10px;
+  box-shadow: none;
+  color: #eee;
+}
+.search .search-select>option{
+  background-color: #293550;
+  color: #eee;
+  border: none;
+}
+
+.search .search-input {
   height: 2rem;
   margin: 0 auto;
   font-size: 0.8rem;
   line-height: 1rem;
-  padding: 10px 15px;
-  display: block;
-  border: 1px solid #ccc;
-  color: #fff;
-  border-radius: 35px;
-  box-sizing: border-box;
-}
-
-.header .search-btns {
-  width: 90%;
-  margin-top: 0.5rem;
-  padding: 0 0.4rem;
-  display: flex;
-  justify-content: space-between;
-}
-
-.header .search-btn {
-  background: #293550;
+  padding: 10px 5px;
   color: #fff;
   border: none;
-  height: 1.5rem;
-  min-width: 2.5rem;
-  letter-spacing: 0.2rem;
+  box-sizing: border-box;
 }
 
 .section {
@@ -131,7 +126,7 @@ img {
   font-size: 0.8rem;
   color: #fff;
   font-weight: bold;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
   height: 2rem;
   line-height: 2rem;
 }
