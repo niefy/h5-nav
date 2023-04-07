@@ -14,33 +14,25 @@
     <div id="app">
         <div class="header">
             <div class="search">
-                <input class="search-input" type="text" v-model="keywords" placeholder="关键词">
+                <input class="search-input" type="text" v-model="keywords" placeholder="关键词" @keyup.enter="search(searchEngines[0].url)">
                 <div class="search-btns">
-                    <button class="search-btn" @click="search(enginUrl)" v-for="(enginUrl,name) in searchEngines" :key="name">{{name}}</button>
+                    <button class="search-btn" @click="search(engin.url)" v-for="engin in searchEngines">{{engin.name}}</button>
                 </div>
             </div>
-            <ul class="category-head">
-                <li v-for="category in bookmarks" :class="{'on':active==category.category}"
-                    @click="active=category.category"  v-cloak>{{category.category}}</li>
-            </ul>
         </div>
         <div class="main">
-            <ul v-for="category in bookmarks" v-show="active==category.category">
-                <li  v-cloak>
-                    <section class="section" v-for="group in category.groups">
-                        <h3><span>{{group.groupName}}</span></h3>
-                        <ul>
-                            <li v-for="item in group.list">
-                                <a :href="item.href">{{item.name}}</a>
-                            </li>
-                        </ul>
-                    </section>
-                </li>
-            </ul>
+            <div class="section" v-for="group in bookmarks" v-cloak>
+                <h3>{{group.groupName}}</h3>
+                <ul>
+                    <li v-for="item in group.list">
+                        <a :href="item.href">{{item.name}}</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="footer">
-        <p>本页支持离线访问，所有数据存储在本地（清空缓存会清除数据）- <a href="https://gitee.com/niefy/h5-nav">源码地址</a></p>
+        <p>本页支持离线访问，所有数据存储在本地（清空缓存会清除数据）- <a href="https://github.com/niefy/h5-nav">源码地址</a></p>
     </div>
 </body>
 <script src="./js/vue.min.js"></script>
