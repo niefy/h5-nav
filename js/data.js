@@ -81,11 +81,11 @@ const DEFAULT_BOOKMARKS = [
  */
 const SEARCH_ENGINES = [
     {
-        "name": "百度",
-        "url": "https://www.baidu.com/s?wd=%s"
-    }, {
         "name": "必应",
         "url": "http://cn.bing.com/search?q=%s"
+    }, {
+        "name": "百度",
+        "url": "https://www.baidu.com/s?wd=%s"
     }, {
         "name": "搜狗",
         "url": "http://m.sogou.com/web/searchList.jsp?keyword=%s"

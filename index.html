@@ -6,12 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--  禁用UC夜间模式  -->
-    <meta name="nightmode" content="disable"/>
+    <meta name="nightmode" content="disable" />
     <title>燕雀导航 - 做个干净好用的手机导航</title>
-    <link rel="icon" href="./img/navigation.png">
+    <link rel="shortcut icon" href="./img/favicon.ico">
     <link rel="manifest" href="./manifest.json">
     <link rel="stylesheet" href="./css/style.css">
 </head>
+
 <body>
     <div id="app">
         <div class="header">
@@ -19,7 +20,8 @@
                 <select class="search-select" v-model="enginUrl" title="enginUrl">
                     <option v-for="engin in searchEngines" :value="engin.url">{{engin.name}}</option>
                 </select>
-                <input class="search-input" type="text" v-model="keywords" placeholder="输入关键词搜索" @keyup.enter="search()">
+                <input class="search-input" type="text" v-model="keywords" placeholder="输入关键词搜索"
+                    @keyup.enter="search()">
             </div>
         </div>
         <div class="main">
@@ -34,34 +36,34 @@
         </div>
     </div>
     <div class="footer">
-        <p>本页支持离线访问，所有数据存储在本地（清空缓存会清除数据）- <a href="https://github.com/niefy/h5-nav">源码地址</a></p>
+        <p>本页支持离线访问，所有数据存储在本地 - <a href="https://github.com/niefy/h5-nav">源码地址</a></p>
     </div>
 </body>
-<script src="./js/vue.min.js"></script>
+<script src="./js/vue.global.min.js"></script>
 <script src="./js/data.js"></script>
 <script>
-    var vm = new Vue({
-        el: '#app',
-        data: {
-            keywords: '',
-            bookmarks: [],
-            active: '',
-            searchEngines: SEARCH_ENGINES,
-            enginUrl:SEARCH_ENGINES[0].url
+    const { createApp } = Vue
+    createApp({
+        data() {
+            return {
+                keywords: '',
+                bookmarks: [],
+                searchEngines: SEARCH_ENGINES,
+                enginUrl: SEARCH_ENGINES[0].url
+            }
         },
         mounted() {
             this.bookmarks = JSON.parse(localStorage.getItem('bookmarks')) || DEFAULT_BOOKMARKS;
-            this.active = this.bookmarks[0].category;
         },
         methods: {
             search() {
                 window.location.href = this.enginUrl.replace('%s', this.keywords);
             }
         }
-    });
+    }).mount('#app')    ;
 
     if ('serviceWorker' in navigator) {//注册service worker便于离线访问
-        navigator.serviceWorker.register('/h5-nav/sw.js').then(function (reg) {
+        navigator.serviceWorker.register('/h5-nav/js/sw.js').then(function (reg) {
             console.log('Registration succeeded. Scope is ' + reg.scope);
         }).catch(function (error) {
             console.log('Registration failed with ' + error);

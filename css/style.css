@@ -1,35 +1,10 @@
-body,
-dd,
-div,
-dl,
-dt,
-fieldset,
-form,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-img,
-input,
-li,
-ol,
-p,
-table,
-td,
-ul {
-  margin: 0;
-  padding: 0
-}
-
 html {
-  height: 100%;
+  min-height: 100%;
   font-size: 20px;
 }
 
 body {
-  background-color: #222d46;
+  background-color: #000000;
   font-family: "微软雅黑";
   min-height: 100%;
   padding-bottom: 4.1rem;
@@ -60,10 +35,6 @@ textarea {
   background: none
 }
 
-input {
-  -webkit-appearance: none
-}
-
 textarea {
   resize: none
 }
@@ -81,7 +52,6 @@ img {
 
 
 .header {
-  background-color: #222d46;
   padding-bottom: 0.05rem;
   padding: 0.1rem 0;
 }
@@ -102,7 +72,7 @@ img {
   color: #eee;
 }
 .search .search-select>option{
-  background-color: #293550;
+  background-color: #202020;
   color: #eee;
   border: none;
 }
@@ -130,7 +100,7 @@ img {
   padding: 0 8px;
   height: 1rem;
   line-height: 1rem;
-  border-left: 2px solid #293550;
+  border-left: 2px solid #202020;
 }
 
 .section ul{
@@ -150,7 +120,7 @@ img {
   display: block;
   color: #fff;
   font-weight: 500;
-  background: #293550;
+  background: #202020;
   border-radius: 5px;
   text-align: left;
   padding: 5px 10px;
