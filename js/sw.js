@@ -1,4 +1,4 @@
-const version="v2023.04.10.1524"
+const version="v2023.04.10.1530"
 
 /**
  * service worker离线缓存配置
@@ -12,7 +12,7 @@ self.addEventListener('install', function (event) {
                 '/h5-nav/index.html',
                 '/h5-nav/manifest.json',
                 '/h5-nav/css/style.css',
-                '/h5-nav/js/vue.min.js',
+                '/h5-nav/js/vue.global.min.js',
                 '/h5-nav/js/data.js',
                 '/h5-nav/img/navigation.png',
             ]);
