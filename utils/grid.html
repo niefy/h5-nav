@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grid Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .radio-label {
+            display: inline-block;
+            margin-right: 30px;
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            line-height: 30px;
+        }
+        
+        .result-label {
+            display: inline-block;
+            width: 100px;
+            text-align: right;
+        }
+        .result-value {
+            display: inline-block;
+            margin-left: 10px;
+            text-align: left;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Grid Calculator</h2>
+        <input type="number" id="priceInput" placeholder="price" oninput="calculate()">
+        <div class="radio-container">
+            <label class="radio-label" style="color: #46b162;">
+                <input type="radio" name="direction" value="long" onchange="calculate()" checked>LONG
+            </label>
+            <label class="radio-label" style="color: #eb5454;">
+                <input type="radio" name="direction"  value="short" onchange="calculate()">SHORT
+            </label>
+        </div>
+        <div class="result" id="result">
+            <div><span class="result-label">LOW:</span><span class="result-value" id="low"></span></div>
+            <div><span class="result-label">HIGH:</span><span class="result-value" id="high"></span></div>
+            <div><span class="result-label">REVERSE:</span><span class="result-value" id="reverse"></span></div>
+        </div>
+    </div>
+    <script>
+        function calculate() {
+            const priceInput = document.getElementById('priceInput');
+            const directionRadios = document.querySelectorAll('input[name="direction"]');
+            
+            const price = parseFloat(priceInput.value);
+            let direction = '';
+            directionRadios.forEach(radio => {
+                if (radio.checked) {
+                    direction = radio.value;
+                }
+            });
+            
+            if (isNaN(price)) {
+                return;
+            }
+            
+            let low, high, reverse;
+            if (direction === 'long') {
+                low = price * 0.9;
+                high = price * 1.4;
+                reverse = price * 0.85;
+            } else if (direction === 'short') {
+                low = price * 0.6;
+                high = price * 1.1;
+                reverse = price * 1.15;
+            }
+            document.getElementById('low').innerText = low.toFixed(5);
+            document.getElementById('high').innerText = high.toFixed(5);
+            document.getElementById('reverse').innerText = reverse.toFixed(5);
+        }
+    </script>
+</body>
+</html>
