@@ -8,17 +8,24 @@
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            font-size: large;
         }
         .container {
-            max-width: 400px;
             margin: 0 auto;
+            padding: 20px;
         }
         input[type="number"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
+            box-sizing: border-box;
+            padding: 8px 10px;
+            font-size: 20px;
             font-weight: bold;
+            line-height: 20px;
+            border-radius: 8px;
+            border-color: #999;
+        }
+        .radio-container{
+            margin-top: 20px;
         }
         .radio-label {
             display: inline-block;
@@ -46,7 +53,9 @@
 <body>
     <div class="container">
         <h2>Grid Calculator</h2>
-        <input type="number" id="priceInput" placeholder="price" oninput="calculate()">
+        <div>
+            <input type="number" id="priceInput" placeholder="price" oninput="calculate()">
+        </div>
         <div class="radio-container">
             <label class="radio-label" style="color: #46b162;">
                 <input type="radio" name="direction" value="long" onchange="calculate()" checked>LONG
