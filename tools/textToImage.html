@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文字秒变图片</title>
+    <link href="https://puhuiti.oss-cn-hangzhou.aliyuncs.com/AlimamaShuHeiTi/AlimamaShuHeiTi-Bold/AlimamaShuHeiTi-Bold.ttf" rel="stylesheet">
+    <style>
+        body {
+            font-family: AlimamaShuHeiTi-Bold;
+            max-width: 768px;
+            margin: 0 auto;
+        }
+        .container {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        textarea {
+            display: block;
+            background: linear-gradient(to bottom, #bfdd15, #059de3);
+            font-family: AlimamaShuHeiTi-Bold;
+            resize: none;
+            padding: 50px 20px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+        }
+        .controls{
+            margin: 10px 0;
+
+        }
+        .float-footer{
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            display: block;
+            background-color: #FE2842;
+            text-align: center;
+            line-height: 40px;
+            color: #ffffff;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="imageSrc">
+            <textarea id="textarea" placeholder="输入您的文字..."></textarea>
+        </div>
+        
+        <div class="controls">
+            <label for="fontSizeSlider">文本大小:</label>
+            <input type="range" id="fontSizeSlider" min="5" max="125" value="25">
+            <span id="fontSizeValue">25</span>
+        </div>
+        <div class="controls">
+            <label for="paddingTopSlider">上边边距:</label>
+            <input type="range" id="paddingTopSlider" min="1" max="400" value="50">
+            <span id="paddingTopValue">50</span>
+        </div>
+        <div class="controls">
+            <label for="paddingLeftSlider">左边边距:</label>
+            <input type="range" id="paddingLeftSlider" min="1" max="300" value="20">
+            <span id="paddingLeftValue">20</span>
+        </div>
+        <div class="controls">
+            <label for="textColor">文字颜色:</label>
+            <input type="color" id="textColor" value="#ffffff">
+        </div>
+        <div class="controls">
+            <label for="bgColor">背景颜色:</label>
+            <input type="color" id="bgColor1" value="#00ff00"> >
+            <input type="color" id="bgColor2" value="#ff6666">
+        </div>
+        <div class="float-footer" id="button">生成图片</div>
+    </div>
+
+    <script>
+        // 获取textarea和滑块元素
+        const textarea = document.getElementById('textarea');
+        const fontSizeSlider = document.getElementById('fontSizeSlider');
+        const paddingTopSlider = document.getElementById('paddingTopSlider');
+        const paddingLeftSlider = document.getElementById('paddingLeftSlider');
+        const fontSizeValue = document.getElementById('fontSizeValue');
+        const paddingTopValue = document.getElementById('paddingTopValue');
+        const paddingLeftValue = document.getElementById('paddingLeftValue');
+        const textColor = document.getElementById('textColor');
+        const bgColor1 = document.getElementById('bgColor1');
+        const bgColor2 = document.getElementById('bgColor2');
+        textarea.value = "下一篇爆文🔥\n从这里诞生✈️";
+        textarea.style.width  = document.body.clientWidth+"px";
+        textarea.style.height  = document.body.clientWidth*(4/3)+"px";
+        textarea.style.fontSize = fontSizeSlider.value + 'px';
+        fontSizeValue.textContent = fontSizeSlider.value;
+        textarea.style.color = textColor.value;
+        textarea.style.background = "linear-gradient(to bottom,"+ bgColor1.value + ","+ bgColor2.value +")";
+
+        // 监听字体大小
+        fontSizeSlider.addEventListener('input', function() {
+            textarea.style.fontSize = this.value + 'px';
+            fontSizeValue.textContent = this.value;
+        });
+        // 监听上边距
+        paddingTopSlider.addEventListener('input', function() {
+            textarea.style.paddingTop = this.value + 'px';
+            paddingTopValue.textContent = this.value;
+        });
+        // 监听左边距
+        paddingLeftSlider.addEventListener('input', function() {
+            textarea.style.paddingLeft = this.value + 'px';
+            paddingLeftValue.textContent = this.value;
+        });
+        document.getElementById('textColor').addEventListener('input', function(event) {
+            textarea.style.color = event.target.value;
+        });
+
+        document.getElementById('bgColor1').addEventListener('input', function(event) {
+            textarea.style.background = "linear-gradient(to bottom,"+ event.target.value + ","+ bgColor2.value +")";
+        });
+        document.getElementById('bgColor2').addEventListener('input', function(event) {
+            textarea.style.background = "linear-gradient(to bottom,"+ bgColor1.value + ","+ event.target.value +")";
+        });
+
+        button.onclick = function() {
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = textarea.offsetWidth;
+            canvas.height = textarea.offsetHeight;
+            context.drawImage(document.getElementById("imageSrc"), 0, 0);
+            const dataURL = canvas.toDataURL('image/png');
+            document.src = dataURL;
+        }
+    </script>
+</body>
+</html>
