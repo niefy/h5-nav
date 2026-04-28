@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON5 解析工具</title>
+
+    <!-- CodeMirror 核心样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <!-- CodeMirror 折叠面板样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.css">
+    <!-- CodeMirror 主题 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+
+    <style>
+        :root {
+            --bg: #1e1e2e;
+            --surface: #282a3a;
+            --surface-light: #333549;
+            --border: #3d3f55;
+            --text: #cdd6f4;
+            --text-secondary: #a6adc8;
+            --text-muted: #6c7086;
+            --primary: #89b4fa;
+            --primary-hover: #74a8f7;
+            --primary-active: #5c94f0;
+            --success: #a6e3a1;
+            --success-hover: #8bd98f;
+            --warning: #f9e2af;
+            --warning-hover: #f5d78a;
+            --danger: #f38ba8;
+            --danger-hover: #ef6f91;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --radius: 10px;
+            --radius-sm: 6px;
+            --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ===== 顶部导航栏 ===== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+            gap: 12px;
+            flex-wrap: wrap;
+            z-index: 10;
+            box-shadow: var(--shadow);
+        }
+
+        .header .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0;
+        }
+
+        .header .logo-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-sm);
+            background: linear-gradient(135deg, #89b4fa, #a6e3a1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e1e2e;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(137, 180, 250, 0.3);
+        }
+
+        .header .title {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            letter-spacing: -0.01em;
+        }
+        .header .title span {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* ===== 按钮栏 ===== */
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 16px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all var(--transition);
+            white-space: nowrap;
+            letter-spacing: 0.01em;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .btn:active {
+            transform: scale(0.96);
+        }
+        .btn .btn-icon {
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+        /* 解析按钮 - 主色 */
+        .btn-parse {
+            background: var(--primary);
+            color: #1e1e2e;
+            box-shadow: 0 2px 8px rgba(137, 180, 250, 0.35);
+        }
+        .btn-parse:hover {
+            background: var(--primary-hover);
+            box-shadow: 0 4px 16px rgba(137, 180, 250, 0.45);
+            transform: translateY(-1px);
+        }
+        .btn-parse:active {
+            background: var(--primary-active);
+            box-shadow: 0 1px 4px rgba(137, 180, 250, 0.3);
+            transform: translateY(0) scale(0.97);
+        }
+
+        /* 压缩按钮 */
+        .btn-compress {
+            background: var(--surface-light);
+            color: var(--warning);
+            border: 1.5px solid rgba(249, 226, 175, 0.35);
+        }
+        .btn-compress:hover {
+            background: #3a3d50;
+            border-color: rgba(249, 226, 175, 0.6);
+            color: #fce8b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(249, 226, 175, 0.15);
+        }
+        .btn-compress:active {
+            background: #2e3040;
+            transform: translateY(0) scale(0.97);
+        }
+
+        /* 展开按钮 */
+        .btn-expand {
+            background: var(--surface-light);
+            color: var(--success);
+            border: 1.5px solid rgba(166, 227, 161, 0.35);
+        }
+        .btn-expand:hover {
+            background: #3a3d50;
+            border-color: rgba(166, 227, 161, 0.6);
+            color: #b8f0b3;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(166, 227, 161, 0.15);
+        }
+        .btn-expand:active {
+            background: #2e3040;
+            transform: translateY(0) scale(0.97);
+        }
+
+        /* 清空按钮 */
+        .btn-clear {
+            background: var(--surface-light);
+            color: var(--danger);
+            border: 1.5px solid rgba(243, 139, 168, 0.35);
+        }
+        .btn-clear:hover {
+            background: #3a3240;
+            border-color: rgba(243, 139, 168, 0.6);
+            color: #f89db8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(243, 139, 168, 0.15);
+        }
+        .btn-clear:active {
+            background: #2e2835;
+            transform: translateY(0) scale(0.97);
+        }
+
+        /* 按钮脉冲动画（解析成功后短暂闪烁） */
+        @keyframes btnPulse {
+            0%,
+            100% {
+                box-shadow: 0 2px 8px rgba(137, 180, 250, 0.35);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(137, 180, 250, 0), 0 2px 8px rgba(137, 180, 250, 0.35);
+            }
+        }
+        .btn-parse.pulse {
+            animation: btnPulse 0.6s ease-out;
+        }
+
+        /* ===== 编辑器容器 ===== */
+        .editor-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            background: var(--surface);
+            margin: 10px 16px;
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            transition: border-color var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .editor-wrapper.error-state {
+            border-color: rgba(243, 139, 168, 0.7);
+            box-shadow: 0 0 0 4px rgba(243, 139, 168, 0.08), var(--shadow-lg);
+        }
+        .editor-wrapper.success-state {
+            border-color: rgba(166, 227, 161, 0.7);
+            box-shadow: 0 0 0 4px rgba(166, 227, 161, 0.08), var(--shadow-lg);
+        }
+
+        .editor-wrapper .CodeMirror {
+            flex: 1;
+            height: 100% !important;
+            font-family: 'JetBrains Mono', 'Fira Code', 'SF Mono', 'Cascadia Code', 'Consolas', 'Monaco', 'Menlo',
+                monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            background: var(--surface);
+            color: var(--text);
+        }
+
+        /* CodeMirror 自定义主题覆盖 */
+        .editor-wrapper .CodeMirror-gutters {
+            background: #252738;
+            border-right: 1px solid var(--border);
+            padding-right: 4px;
+        }
+        .editor-wrapper .CodeMirror-linenumber {
+            color: var(--text-muted);
+            font-size: 0.78rem;
+            padding: 0 8px 0 6px;
+        }
+        .editor-wrapper .CodeMirror-foldgutter {
+            width: 1.2em;
+        }
+        .editor-wrapper .CodeMirror-foldgutter-open,
+        .editor-wrapper .CodeMirror-foldgutter-folded {
+            cursor: pointer;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: color var(--transition);
+        }
+        .editor-wrapper .CodeMirror-foldgutter-open:hover,
+        .editor-wrapper .CodeMirror-foldgutter-folded:hover {
+            color: var(--primary);
+        }
+        .editor-wrapper .CodeMirror-foldgutter-open:after {
+            content: '▾';
+        }
+        .editor-wrapper .CodeMirror-foldgutter-folded:after {
+            content: '▸';
+        }
+        .editor-wrapper .CodeMirror-cursor {
+            border-left-color: #f5e0dc;
+            border-left-width: 2px;
+        }
+        .editor-wrapper .CodeMirror-selected {
+            background: rgba(137, 180, 250, 0.2) !important;
+        }
+        .editor-wrapper .CodeMirror-focused .CodeMirror-selected {
+            background: rgba(137, 180, 250, 0.28) !important;
+        }
+        .editor-wrapper .CodeMirror-matchingbracket {
+            color: #a6e3a1 !important;
+            background: rgba(166, 227, 161, 0.2);
+            border-radius: 2px;
+            padding: 0 1px;
+        }
+        .editor-wrapper .CodeMirror-nonmatchingbracket {
+            color: #f38ba8 !important;
+            background: rgba(243, 139, 168, 0.25);
+            border-radius: 2px;
+        }
+
+        /* CodeMirror 滚动条 */
+        .editor-wrapper .CodeMirror-scrollbar-filler,
+        .editor-wrapper .CodeMirror-gutter-filler {
+            background: transparent;
+        }
+        .editor-wrapper .CodeMirror-vscrollbar::-webkit-scrollbar,
+        .editor-wrapper .CodeMirror-hscrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .editor-wrapper .CodeMirror-vscrollbar::-webkit-scrollbar-track,
+        .editor-wrapper .CodeMirror-hscrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .editor-wrapper .CodeMirror-vscrollbar::-webkit-scrollbar-thumb,
+        .editor-wrapper .CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+        .editor-wrapper .CodeMirror-vscrollbar::-webkit-scrollbar-thumb:hover,
+        .editor-wrapper .CodeMirror-hscrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* ===== 底部状态栏 ===== */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            flex-shrink: 0;
+            min-height: 38px;
+            transition: all var(--transition);
+            flex-wrap: wrap;
+        }
+        .status-bar.success {
+            color: var(--success);
+            background: rgba(166, 227, 161, 0.06);
+        }
+        .status-bar.error {
+            color: var(--danger);
+            background: rgba(243, 139, 168, 0.06);
+        }
+        .status-bar .status-icon {
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .status-bar .status-text {
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+        }
+        .status-bar .status-extra {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .status-bar .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            flex-shrink: 0;
+            transition: background var(--transition);
+        }
+        .status-bar.success .status-dot {
+            background: var(--success);
+            box-shadow: 0 0 8px rgba(166, 227, 161, 0.5);
+        }
+        .status-bar.error .status-dot {
+            background: var(--danger);
+            box-shadow: 0 0 8px rgba(243, 139, 168, 0.5);
+        }
+
+        /* ===== Toast 提示 ===== */
+        .toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-weight: 600;
+            font-size: 0.875rem;
+            z-index: 1000;
+            pointer-events: none;
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: var(--shadow-lg);
+            letter-spacing: 0.01em;
+            white-space: nowrap;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast.success-toast {
+            background: #2d4a3a;
+            color: #a6e3a1;
+            border: 1px solid rgba(166, 227, 161, 0.4);
+        }
+        .toast.error-toast {
+            background: #3d2535;
+            color: #f38ba8;
+            border: 1px solid rgba(243, 139, 168, 0.4);
+        }
+        .toast.info-toast {
+            background: #2a3348;
+            color: #89b4fa;
+            border: 1px solid rgba(137, 180, 250, 0.4);
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 640px) {
+            .header {
+                padding: 8px 12px;
+                gap: 8px;
+            }
+            .header .title {
+                font-size: 0.9rem;
+            }
+            .btn {
+                padding: 7px 12px;
+                font-size: 0.8rem;
+                gap: 4px;
+                border-radius: 5px;
+            }
+            .btn .btn-text-short {
+                display: inline;
+            }
+            .btn .btn-text-full {
+                display: none;
+            }
+            .editor-wrapper {
+                margin: 6px 8px;
+                border-radius: var(--radius-sm);
+            }
+            .status-bar {
+                padding: 6px 10px;
+                font-size: 0.72rem;
+            }
+            .logo-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+            }
+        }
+        @media (min-width: 641px) {
+            .btn .btn-text-short {
+                display: none;
+            }
+            .btn .btn-text-full {
+                display: inline;
+            }
+        }
+
+        /* ===== 自定义选中颜色 ===== */
+        ::selection {
+            background: rgba(137, 180, 250, 0.3);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 顶部导航 & 按钮栏 -->
+    <header class="header">
+        <div class="logo-area">
+            <div class="logo-icon" title="JSON5 → JSON">{…}</div>
+            <div class="title">JSON5<span>解析器</span></div>
+        </div>
+        <div class="btn-group">
+            <button class="btn btn-parse" id="btnParse" title="将JSON5转换为标准JSON">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text-full">解析 JSON5</span>
+                <span class="btn-text-short">解析</span>
+            </button>
+            <button class="btn btn-compress" id="btnCompress" title="压缩为一行">
+                <span class="btn-icon">📦</span>
+                <span class="btn-text-full">压缩</span>
+                <span class="btn-text-short">压</span>
+            </button>
+            <button class="btn btn-expand" id="btnExpand" title="格式化展开">
+                <span class="btn-icon">↔️</span>
+                <span class="btn-text-full">展开</span>
+                <span class="btn-text-short">展</span>
+            </button>
+            <button class="btn btn-clear" id="btnClear" title="清空编辑器">
+                <span class="btn-icon">🗑️</span>
+                <span class="btn-text-full">清空</span>
+                <span class="btn-text-short">清</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- 编辑器容器 -->
+    <div class="editor-wrapper" id="editorWrapper">
+        <textarea id="codeEditor" style="display:none;"></textarea>
+    </div>
+
+    <!-- 底部状态栏 -->
+    <div class="status-bar" id="statusBar">
+        <span class="status-dot" id="statusDot"></span>
+        <span class="status-text" id="statusText">就绪 — 支持 JSON5 语法（单引号、注释、尾随逗号、无引号键名等）</span>
+        <span class="status-extra" id="statusExtra"></span>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ==================== 脚本依赖 ==================== -->
+    <!-- CodeMirror 核心 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js">
+    </script>
+    <!-- JavaScript 模式（兼容 JSON5 语法高亮） -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js">
+    </script>
+    <!-- 代码折叠核心 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldcode.min.js">
+    </script>
+    <!-- 折叠面板 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/foldgutter.min.js">
+    </script>
+    <!-- 花括号/方括号折叠 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/fold/brace-fold.min.js">
+    </script>
+    <!-- 括号匹配高亮 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/edit/matchbrackets.min.js">
+    </script>
+    <!-- JSON5 解析库 -->
+    <script src="https://cdn.jsdelivr.net/npm/json5@2.2.3/dist/index.min.js">
+    </script>
+
+    <script>
+        (function() {
+            // ============ DOM 引用 ============
+            const editorWrapper = document.getElementById('editorWrapper');
+            const statusBar = document.getElementById('statusBar');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
+            const statusExtra = document.getElementById('statusExtra');
+            const toastEl = document.getElementById('toast');
+            const btnParse = document.getElementById('btnParse');
+            const btnCompress = document.getElementById('btnCompress');
+            const btnExpand = document.getElementById('btnExpand');
+            const btnClear = document.getElementById('btnClear');
+            const textarea = document.getElementById('codeEditor');
+
+            // ============ 检查依赖 ============
+            if (typeof CodeMirror === 'undefined') {
+                document.body.innerHTML =
+                    '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#f38ba8;font-family:sans-serif;font-size:1.2rem;text-align:center;padding:20px;">⚠️ CodeMirror 加载失败，请检查网络连接后刷新页面。</div>';
+                return;
+            }
+            if (typeof JSON5 === 'undefined') {
+                document.body.innerHTML =
+                    '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#f38ba8;font-family:sans-serif;font-size:1.2rem;text-align:center;padding:20px;">⚠️ JSON5 解析库加载失败，请检查网络连接后刷新页面。</div>';
+                return;
+            }
+
+            // ============ 初始示例内容 ============
+            const initialContent = `{
+                // 📋 这是一个 JSON5 示例
+                name: 'JSON5 示例',
+                version: 1.0,
+                features: [
+                    '单引号字符串',
+                    '无引号键名',
+                    '尾随逗号',
+                    '注释支持',
+                ],
+                metadata: {
+                    author: '匿名',
+                    tags: ['json5', 'parser', 'tool'],
+                    /* 嵌套对象 */
+                    config: {
+                        debug: false,
+                        maxItems: 100,
+                        ratio: 0.75,
+                    },
+                },
+                specialValues: [
+                    Infinity,
+                    -Infinity,
+                    NaN,
+                    0x1A, // 十六进制
+                ],
+            }`;
+
+            // ============ 初始化 CodeMirror ============
+            const cm = CodeMirror.fromTextArea(textarea, {
+                value: initialContent,
+                mode: 'javascript', // JavaScript 模式对 JSON5 语法高亮更友好
+                theme: 'material-darker',
+                lineNumbers: true,
+                foldGutter: true,
+                gutters: [
+                    'CodeMirror-linenumbers',
+                    'CodeMirror-foldgutter',
+                ],
+                matchBrackets: true,
+                autoCloseBrackets: true,
+                tabSize: 2,
+                indentUnit: 2,
+                indentWithTabs: false,
+                viewportMargin: 50,
+                extraKeys: {
+                    // Tab 键插入空格
+                    'Tab': function(cmInstance) {
+                        cmInstance.replaceSelection('  ', 'end');
+                    },
+                },
+            });
+
+            // 设置编辑器尺寸
+            cm.setSize('100%', '100%');
+
+            // 初始时折叠一些内部节点，展示折叠功能
+            setTimeout(() => {
+                // 折叠 metadata 对象（约第9行开始）
+                const doc = cm.getDoc();
+                for (let i = 0; i < doc.lineCount(); i++) {
+                    const lineText = doc.getLine(i);
+                    if (lineText.includes('metadata:')) {
+                        cm.foldCode(i);
+                        break;
+                    }
+                }
+                // 折叠 config 对象
+                for (let i = 0; i < doc.lineCount(); i++) {
+                    const lineText = doc.getLine(i);
+                    if (lineText.includes('config:')) {
+                        cm.foldCode(i);
+                        break;
+                    }
+                }
+            }, 300);
+
+            // ============ Toast 提示 ============
+            let toastTimer = null;
+
+            function showToast(message, type) {
+                if (toastTimer) clearTimeout(toastTimer);
+                toastEl.textContent = message;
+                toastEl.className = 'toast ' + type + '-toast';
+                // 强制回流后添加 show 类
+                void toastEl.offsetWidth;
+                toastEl.classList.add('show');
+                toastTimer = setTimeout(() => {
+                    toastEl.classList.remove('show');
+                }, 2200);
+            }
+
+            // ============ 状态栏更新 ============
+            function setStatus(type, message, extra) {
+                statusBar.className = 'status-bar';
+                if (type === 'success') statusBar.classList.add('success');
+                if (type === 'error') statusBar.classList.add('error');
+                statusText.textContent = message;
+                statusExtra.textContent = extra || '';
+                if (type === 'success') {
+                    statusDot.style.background = 'var(--success)';
+                    statusDot.style.boxShadow = '0 0 8px rgba(166, 227, 161, 0.5)';
+                } else if (type === 'error') {
+                    statusDot.style.background = 'var(--danger)';
+                    statusDot.style.boxShadow = '0 0 8px rgba(243, 139, 168, 0.5)';
+                } else {
+                    statusDot.style.background = 'var(--text-muted)';
+                    statusDot.style.boxShadow = 'none';
+                }
+            }
+
+            function resetStatus() {
+                statusBar.className = 'status-bar';
+                statusDot.style.background = 'var(--text-muted)';
+                statusDot.style.boxShadow = 'none';
+                statusText.textContent = '就绪 — 支持 JSON5 语法（单引号、注释、尾随逗号、无引号键名等）';
+                statusExtra.textContent = '';
+                editorWrapper.classList.remove('error-state', 'success-state');
+            }
+
+            // ============ 核心：解析 JSON5 → 标准 JSON ============
+            function parseAndFormat(style) {
+                const input = cm.getValue().trim();
+
+                if (!input) {
+                    setStatus('error', '⚠️ 输入内容为空', '');
+                    editorWrapper.classList.add('error-state');
+                    editorWrapper.classList.remove('success-state');
+                    showToast('输入内容为空', 'error');
+                    return null;
+                }
+
+                let parsed;
+                try {
+                    parsed = JSON5.parse(input);
+                } catch (err) {
+                    const errMsg = err.message || String(err);
+                    // 提取行号信息
+                    let lineInfo = '';
+                    const lineMatch = errMsg.match(/at\s+line\s+(\d+)/i) ||
+                        errMsg.match(/position\s+(\d+)/i) ||
+                        errMsg.match(/column\s+(\d+)/i);
+                    if (lineMatch) {
+                        lineInfo = ` (位置: ${lineMatch[0]})`;
+                    }
+                    setStatus('error', '❌ JSON5 解析失败: ' + errMsg.split('\n')[0], lineInfo);
+                    editorWrapper.classList.add('error-state');
+                    editorWrapper.classList.remove('success-state');
+                    showToast('解析失败，请检查语法', 'error');
+                    // 尝试定位错误行
+                    const lineNumMatch = errMsg.match(/line\s+(\d+)/i);
+                    if (lineNumMatch && cm.getDoc()) {
+                        const lineNum = parseInt(lineNumMatch[1], 10);
+                        if (lineNum > 0 && lineNum <= cm.lineCount()) {
+                            cm.setCursor(lineNum - 1, 0);
+                            cm.focus();
+                        }
+                    }
+                    return null;
+                }
+
+                // 根据 style 格式化
+                let output;
+                if (style === 'compress') {
+                    output = JSON.stringify(parsed);
+                } else {
+                    // 'expand' 或 'parse' — 美化输出
+                    output = JSON.stringify(parsed, null, 2);
+                }
+
+                return { parsed, output };
+            }
+
+            function applyOutput(output, actionLabel) {
+                const cursor = cm.getCursor();
+                const scrollInfo = cm.getScrollInfo();
+                cm.setValue(output);
+                // 尝试恢复光标位置
+                const doc = cm.getDoc();
+                const targetLine = Math.min(cursor.line, doc.lineCount() - 1);
+                const targetCh = Math.min(cursor.ch, (doc.getLine(targetLine) || '').length);
+                cm.setCursor(targetLine, targetCh);
+                // 恢复滚动位置
+                cm.scrollTo(scrollInfo.left, Math.min(scrollInfo.top, cm.getScrollInfo().height));
+                cm.focus();
+
+                setStatus('success', '✅ ' + actionLabel + '成功', '输出为标准 JSON 格式');
+                editorWrapper.classList.add('success-state');
+                editorWrapper.classList.remove('error-state');
+                showToast(actionLabel + '完成', 'success');
+
+                // 按钮脉冲动画
+                if (actionLabel.includes('解析')) {
+                    btnParse.classList.add('pulse');
+                    setTimeout(() => btnParse.classList.remove('pulse'), 600);
+                }
+            }
+
+            // ============ 按钮事件 ============
+            // 解析按钮
+            btnParse.addEventListener('click', () => {
+                const result = parseAndFormat('parse');
+                if (result) {
+                    applyOutput(result.output, '解析');
+                }
+            });
+
+            // 压缩按钮
+            btnCompress.addEventListener('click', () => {
+                const result = parseAndFormat('compress');
+                if (result) {
+                    applyOutput(result.output, '压缩');
+                }
+            });
+
+            // 展开按钮
+            btnExpand.addEventListener('click', () => {
+                const result = parseAndFormat('expand');
+                if (result) {
+                    applyOutput(result.output, '展开');
+                }
+            });
+
+            // 清空按钮
+            btnClear.addEventListener('click', () => {
+                cm.setValue('');
+                cm.focus();
+                resetStatus();
+                showToast('已清空', 'info');
+                editorWrapper.classList.remove('error-state', 'success-state');
+            });
+
+            // ============ 键盘快捷键 ============
+            document.addEventListener('keydown', function(e) {
+                const isMod = e.ctrlKey || e.metaKey;
+                if (isMod && e.key === 'Enter') {
+                    // Ctrl/Cmd + Enter → 解析
+                    e.preventDefault();
+                    btnParse.click();
+                } else if (isMod && e.shiftKey && e.key === 'K') {
+                    // Ctrl/Cmd + Shift + K → 压缩
+                    e.preventDefault();
+                    btnCompress.click();
+                } else if (isMod && e.shiftKey && e.key === 'E') {
+                    // Ctrl/Cmd + Shift + E → 展开
+                    e.preventDefault();
+                    btnExpand.click();
+                } else if (isMod && e.shiftKey && e.key === 'X') {
+                    // Ctrl/Cmd + Shift + X → 清空
+                    e.preventDefault();
+                    btnClear.click();
+                }
+            });
+
+            // ============ 编辑器内容变化时清除状态 ============
+            let changeTimeout;
+            cm.on('change', () => {
+                if (changeTimeout) clearTimeout(changeTimeout);
+                changeTimeout = setTimeout(() => {
+                    // 如果之前是错误/成功状态，用户修改内容后重置
+                    if (
+                        editorWrapper.classList.contains('error-state') ||
+                        editorWrapper.classList.contains('success-state')
+                    ) {
+                        resetStatus();
+                    }
+                }, 400);
+            });
+
+            // ============ 窗口大小调整 ============
+            function refreshEditor() {
+                cm.refresh();
+            }
+            window.addEventListener('resize', refreshEditor);
+
+            // 使用 ResizeObserver 监听编辑器容器变化
+            if (window.ResizeObserver) {
+                const ro = new ResizeObserver(() => {
+                    cm.refresh();
+                });
+                ro.observe(editorWrapper);
+            }
+
+            // ============ 初始化完成 ============
+            cm.refresh();
+            cm.focus();
+            // 将光标放到合适位置
+            cm.setCursor(1, 4);
+            setStatus('success', '✅ 就绪 — 已加载示例 JSON5 数据', '支持折叠展开 | Ctrl+Enter 快捷解析');
+            statusBar.classList.add('success');
+            statusDot.style.background = 'var(--success)';
+            statusDot.style.boxShadow = '0 0 8px rgba(166, 227, 161, 0.5)';
+            editorWrapper.classList.add('success-state');
+
+            console.log('🚀 JSON5 解析工具已就绪');
+            console.log('  快捷键: Ctrl+Enter 解析 | Ctrl+Shift+K 压缩 | Ctrl+Shift+E 展开 | Ctrl+Shift+X 清空');
+            console.log('  支持: 单引号 · 注释 · 尾随逗号 · 无引号键名 · 十六进制 · Infinity/NaN');
+            console.log('  JSON5 库: json5@2.2.3 | 编辑器: CodeMirror 5.65.16');
+        })();
+    </script>
+</body>
+</html>
