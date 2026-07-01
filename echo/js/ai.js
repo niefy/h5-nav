@@ -17,7 +17,7 @@ window.app = window.app || {};
     list.innerHTML = chatable.map(function(a, idx) {
       var last = (a.messages && a.messages.length) ? a.messages[a.messages.length - 1] : null;
       var lastText = last ? (last.from === 'me' ? '我：' : a.name + '：') + last.text : '暂无聊天记录';
-      return '<div class="avatar-card" style="animation-delay:' + (idx * 0.05) + 's"' +
+      return '<div class="avatar-card"' +
         ' onclick="app.selectAvatar(\'' + a.id + '\')"' +
         ' oncontextmenu="event.preventDefault(); app.editAvatar(\'' + a.id + '\')">' +
         '<div class="avatar-info">' +

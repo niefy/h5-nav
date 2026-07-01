@@ -25,7 +25,6 @@ window.app = window.app || {};
     grid.classList.toggle('edit-mode', !!state.editMode);
     grid.innerHTML = state.cards.map(function(card, idx) {
       return '<div class="grid-card ' + (card.accent ? 'accent' : '') + '"' +
-        ' style="animation-delay:' + (idx * 0.05) + 's"' +
         ' onclick="app.openDetail(\'' + card.id + '\')">' +
         (state.editMode ? '<div class="delete-badge" onclick="event.stopPropagation(); app.deleteCard(\'' + card.id + '\')">×</div>' : '') +
         '<div class="grid-card-top">' +
@@ -222,13 +221,15 @@ window.app = window.app || {};
     var range = max - min || 1;
     var barMaxHeight = Math.max(h - 10, 1);
 
-    // 颜色库 —— 每个图表随机选一个颜色，所有柱子统一
-    var COLOR_PALETTE = [
+    // 优先使用当前主题色，辅以协调色库
+    var themeAccent = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
+    var COLOR_PALETTE = [themeAccent,
       '#8E6B51', '#3A7D44', '#4A6FA5', '#B85C7A', '#7A5C9C',
       '#E8734A', '#2CA89A', '#D4A72C', '#5C7CFA', '#E05B8C',
       '#20B8A0', '#F07B4E', '#6C8EBF', '#C060A0', '#50A060'
     ];
-    var chartColor = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
+    // 70% 概率使用主题色，30% 随机选
+    var chartColor = Math.random() < 0.7 ? themeAccent : COLOR_PALETTE[Math.floor(Math.random() * (COLOR_PALETTE.length - 1)) + 1];
 
     var barCount = values.length;
     var barWidth = Math.min(24, (w / barCount) * 0.35);
@@ -237,7 +238,7 @@ window.app = window.app || {};
     // 动画状态：每个柱子的进度 0→1，逐个生长
     var barProgress = values.map(function() { return 0; });
     var currentBar = 0;
-    var animSpeed = 0.05;
+    var animSpeed = 0.12;
 
     function drawFrame() {
       ctx.clearRect(0, 0, rect.width, rect.height);

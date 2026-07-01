@@ -93,6 +93,18 @@ window.app = window.app || {};
         { from: 'avatar', text: '你上次说想学画画，开始了吗？', time: '15:40' },
         { from: 'me', text: '还没呢，最近有点忙。', time: '15:42' },
         { from: 'avatar', text: '没关系，慢慢来。我可以陪你一起，先从简单的素描开始～', time: '15:43' }
+      ]},
+      // 宠物 4
+      { id: 'pet4', name: '布布', type: 'pet', avatar: './images/pet4.png', birthday: '2024-02-20', personality: '胆小、粘人', messages: [
+        { from: 'avatar', text: '外面打雷了……好可怕，可以抱抱我吗？', time: '22:05' },
+        { from: 'me', text: '别怕，只是打雷而已，过来吧。', time: '22:06' },
+        { from: 'avatar', text: '嗯嗯…躲在你身边就不怕了。你真好～', time: '22:07' }
+      ]},
+      // 人物 4
+      { id: 'human4', name: '若兰', type: 'human', avatar: './images/human4.png', birthday: '1999-07-18', personality: '开朗、热心', messages: [
+        { from: 'avatar', text: '今天有一部很好看的电影上映了，想一起去看吗？', time: '13:10' },
+        { from: 'me', text: '什么电影呀？', time: '13:12' },
+        { from: 'avatar', text: '是一部治愈系的动画片，听说看完心情会变好！我请你～', time: '13:13' }
       ]}
     ],
     notes: [
@@ -112,7 +124,7 @@ window.app = window.app || {};
 
   /* ========== Icon SVGs ========== */
   app.icons = {
-    heart: '<i class="iconfont icon-jiankang"></i>',
+    heart: '<i class="iconfont icon-a-045_dianzan-23"></i>',
     pressure: '<i class="iconfont icon-kangya"></i>',
     drop: '<i class="iconfont icon-jiankangzhi"></i>',
     lipid: '<i class="iconfont icon-guanzhuangdongmai"></i>',
@@ -121,7 +133,7 @@ window.app = window.app || {};
     pill: '<i class="iconfont icon-mianyibingdu"></i>',
     smile: '<i class="iconfont icon-a-045_dianzan-23"></i>',
     diary: '<i class="iconfont icon-a-045_shuben"></i>',
-    age: '<i class="iconfont icon-jiankang"></i>',
+    age: '<i class="iconfont icon-a-045_shuju-18"></i>',
     walk: '<i class="iconfont icon-shentijineng"></i>'
   };
 
@@ -195,16 +207,11 @@ window.app = window.app || {};
   app.newAvatarPhoto = null;
 
   app.loadState = function() {
-    try {
-      var raw = localStorage.getItem('echo_me_state');
-      return raw ? Object.assign({}, app.defaultState, JSON.parse(raw)) : JSON.parse(JSON.stringify(app.defaultState));
-    } catch (e) {
-      return JSON.parse(JSON.stringify(app.defaultState));
-    }
+    return JSON.parse(JSON.stringify(app.defaultState));
   };
 
   app.saveState = function() {
-    localStorage.setItem('echo_me_state', JSON.stringify(app.state));
+    // 仅内存缓存，不持久化
   };
 
   app.state = app.loadState();

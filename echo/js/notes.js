@@ -45,7 +45,7 @@ window.app = window.app || {};
           '<div class="wave">' + waveBars + '</div><span>0:12</span></div>';
       }
 
-      return '<div class="note-item" style="animation-delay:' + (idx * 0.05) + 's">' +
+      return '<div class="note-item">' +
         '<span class="note-date">' + note.date + '</span>' +
         (note.content ? '<div class="note-content">' + note.content + '</div>' : '') +
         mediaHtml +
