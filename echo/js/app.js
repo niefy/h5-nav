@@ -12,6 +12,12 @@ window.app = window.app || {};
     var nav = document.querySelector('.nav-item[data-tab="' + tab + '"]');
     if (nav) nav.classList.add('active');
 
+    // 聊天页和详情页不展示底部导航栏
+    var bottomNav = document.querySelector('.bottom-nav');
+    if (bottomNav) {
+      bottomNav.style.display = (tab === 'chat' || tab === 'detail') ? 'none' : '';
+    }
+
     if (tab === 'home') app.renderHome();
     if (tab === 'ai') app.renderAvatars();
     if (tab === 'chat') app.renderChat();

@@ -122,6 +122,10 @@ window.app = window.app || {};
     app.$('#detailPage').classList.add('active');
     document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
 
+    // 进入详情页时隐藏底部导航
+    var bottomNav = document.querySelector('.bottom-nav');
+    if (bottomNav) bottomNav.style.display = 'none';
+
     app.$('#detailTitle').textContent = card.title;
     app.renderDetail(card);
   };
@@ -144,7 +148,7 @@ window.app = window.app || {};
           return '<div class="detail-list-item"><span class="time">' + d.date + '</span><span class="value">' + d.value + ' ' + card.unit + '</span></div>';
         }).join('') +
         '</div>';
-      setTimeout(function() { app.drawLineChart(card.data, card.unit); }, 50);
+      setTimeout(function() { app.drawBarChart(card.data, card.unit); }, 50);
     } else if (card.category === 'timeline') {
       body.innerHTML =
         '<div class="detail-summary">' +
@@ -191,7 +195,8 @@ window.app = window.app || {};
     }
   };
 
-  app.drawLineChart = function(data) {
+  /* ========== Bar Chart（柱状图）========== */
+  app.drawBarChart = function(data) {
     var canvas = app.$('#detailChart');
     if (!canvas) return;
     var ctx = canvas.getContext('2d');
@@ -209,58 +214,105 @@ window.app = window.app || {};
     });
     if (values.length === 0) values = [0];
 
-    var padding = 30;
-    var w = rect.width - padding * 2;
-    var h = rect.height - padding * 2;
+    var padding = { top: 25, right: 16, bottom: 28, left: 16 };
+    var w = rect.width - padding.left - padding.right;
+    var h = rect.height - padding.top - padding.bottom;
     var max = Math.max.apply(null, values.concat([1]));
     var min = Math.min.apply(null, values.concat([0]));
     var range = max - min || 1;
+    var barMaxHeight = Math.max(h - 10, 1);
 
-    ctx.clearRect(0, 0, rect.width, rect.height);
-    ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim();
-    ctx.lineWidth = 3;
-    ctx.lineCap = 'round';
-    ctx.lineJoin = 'round';
+    // 颜色库 —— 每个图表随机选一个颜色，所有柱子统一
+    var COLOR_PALETTE = [
+      '#8E6B51', '#3A7D44', '#4A6FA5', '#B85C7A', '#7A5C9C',
+      '#E8734A', '#2CA89A', '#D4A72C', '#5C7CFA', '#E05B8C',
+      '#20B8A0', '#F07B4E', '#6C8EBF', '#C060A0', '#50A060'
+    ];
+    var chartColor = COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)];
 
-    var coords = values.map(function(v, i) {
-      return {
-        x: padding + (w / (values.length - 1 || 1)) * i,
-        y: padding + h - ((v - min) / range) * h
-      };
-    });
+    var barCount = values.length;
+    var barWidth = Math.min(24, (w / barCount) * 0.35);
+    var gap = w / barCount;
 
-    var progress = 0;
-    function draw() {
-      progress += 0.03;
-      if (progress > 1) progress = 1;
+    // 动画状态：每个柱子的进度 0→1，逐个生长
+    var barProgress = values.map(function() { return 0; });
+    var currentBar = 0;
+    var animSpeed = 0.05;
+
+    function drawFrame() {
       ctx.clearRect(0, 0, rect.width, rect.height);
+
+      // 水平网格线
+      ctx.strokeStyle = 'rgba(0,0,0,0.06)';
+      ctx.lineWidth = 1;
+      for (var i = 0; i <= 3; i++) {
+        var gy = padding.top + (h / 3) * i;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, gy);
+        ctx.lineTo(padding.left + w, gy);
+        ctx.stroke();
+      }
+
+      // 基线
+      ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+      ctx.lineWidth = 1;
       ctx.beginPath();
-      coords.forEach(function(p, i) {
-        if (i === 0) ctx.moveTo(padding + (coords[0].x - padding) * progress, p.y);
-        else ctx.lineTo(padding + (p.x - padding) * progress, p.y);
-      });
+      ctx.moveTo(padding.left, padding.top + h);
+      ctx.lineTo(padding.left + w, padding.top + h);
       ctx.stroke();
 
-      if (progress < 1) requestAnimationFrame(draw);
-      else {
-        coords.forEach(function(p) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
-          ctx.fillStyle = '#fff';
-          ctx.fill();
-          ctx.stroke();
-        });
+      // 绘制每个柱子（统一颜色）
+      values.forEach(function(v, i) {
+        var targetH = ((v - min) / range) * barMaxHeight;
+        var currentH = targetH * barProgress[i];
+        if (currentH < 0.5) currentH = 0.5; // 0 值也露一点头
+        var x = padding.left + gap * i + (gap - barWidth) / 2;
+        var y = padding.top + h - currentH;
+
+        var radius = Math.min(7, barWidth / 2);
+        ctx.fillStyle = chartColor;
+        ctx.beginPath();
+        ctx.moveTo(x, padding.top + h);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.lineTo(x + barWidth - radius, y);
+        ctx.quadraticCurveTo(x + barWidth, y, x + barWidth, y + radius);
+        ctx.lineTo(x + barWidth, padding.top + h);
+        ctx.closePath();
+        ctx.fill();
+
+        // 数值标签（柱子长出超过一半时显示）
+        if (barProgress[i] > 0.6) {
+          ctx.fillStyle = chartColor;
+          ctx.font = 'bold 11px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText(v, x + barWidth / 2, y - 6);
+        }
+      });
+
+      // 日期标签
+      ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'center';
+      labels.forEach(function(l, i) {
+        var lx = padding.left + gap * i + gap / 2;
+        ctx.fillText(l, lx, rect.height - 6);
+      });
+
+      // 逐个推进当前柱子的动画
+      if (currentBar < barCount) {
+        barProgress[currentBar] = Math.min(1, barProgress[currentBar] + animSpeed);
+        if (barProgress[currentBar] >= 1) {
+          currentBar++;
+        }
+      }
+
+      if (currentBar < barCount) {
+        requestAnimationFrame(drawFrame);
       }
     }
-    draw();
 
-    ctx.fillStyle = getComputedStyle(document.documentElement).getPropertyValue('--text-secondary').trim();
-    ctx.font = '11px sans-serif';
-    ctx.textAlign = 'center';
-    labels.forEach(function(l, i) {
-      var x = padding + (w / (labels.length - 1 || 1)) * i;
-      ctx.fillText(l, x, rect.height - 8);
-    });
+    drawFrame();
   };
 
   app.openAddDetailData = function() {

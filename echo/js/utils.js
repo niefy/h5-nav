@@ -56,12 +56,43 @@ window.app = window.app || {};
       ]}
     ],
     avatars: [
+      // 宠物 1
       { id: 'pet1', name: '派派', type: 'pet', avatar: './images/pet1.png', birthday: '2022-03-10', personality: '活泼、粘人', messages: [
         { from: 'avatar', text: '主人今天过得怎么样？要记得多喝水哦！', time: '14:20' },
         { from: 'me', text: '刚开完会，有点累。', time: '14:22' },
         { from: 'avatar', text: '辛苦啦！要不要趴一会儿？我可以给你讲个冷笑话。', time: '14:23' },
         { from: 'me', text: '好啊，讲一个吧。', time: '14:24' },
         { from: 'avatar', text: '为什么小狗不会说谎？因为它一开口就是"汪汪"真～', time: '14:25' }
+      ]},
+      // 人物 1
+      { id: 'human1', name: '小暖', type: 'human', avatar: './images/human1.png', birthday: '2000-05-20', personality: '温柔、体贴', messages: [
+        { from: 'avatar', text: '今天阳光真好，要不要一起出去走走？', time: '09:15' },
+        { from: 'me', text: '好呀，正好想散散步。', time: '09:16' },
+        { from: 'avatar', text: '记得涂防晒哦，我帮你看了天气，今天紫外线有点强～', time: '09:17' }
+      ]},
+      // 宠物 2
+      { id: 'pet2', name: '豆豆', type: 'pet', avatar: './images/pet2.png', birthday: '2023-01-08', personality: '呆萌、贪吃', messages: [
+        { from: 'avatar', text: '咕噜噜……肚子在叫了，是不是该开饭了？', time: '11:55' },
+        { from: 'me', text: '又饿了？不是刚喂过你吗。', time: '11:56' },
+        { from: 'avatar', text: '那点哪够！我的梦想是吃遍天下所有好吃的！', time: '11:57' }
+      ]},
+      // 人物 2
+      { id: 'human2', name: '阿哲', type: 'human', avatar: './images/human2.png', birthday: '1998-09-12', personality: '理性、幽默', messages: [
+        { from: 'avatar', text: '我最近读了一本关于习惯养成的书，想听听吗？', time: '20:30' },
+        { from: 'me', text: '好啊，有什么有意思的观点？', time: '20:32' },
+        { from: 'avatar', text: '书里说养成一个习惯只需要 21 天，但放弃只需要一次"算了今天就休息一下吧"。', time: '20:33' }
+      ]},
+      // 宠物 3
+      { id: 'pet3', name: '球球', type: 'pet', avatar: './images/pet3.png', birthday: '2023-06-15', personality: '慵懒、傲娇', messages: [
+        { from: 'avatar', text: '哼，才不是特意等你回来呢。只是刚好睡在这里而已。', time: '18:10' },
+        { from: 'me', text: '好好好，那我摸摸你总可以吧？', time: '18:11' },
+        { from: 'avatar', text: '…勉为其难让你摸一下。不许超过三秒！', time: '18:12' }
+      ]},
+      // 人物 3
+      { id: 'human3', name: '念念', type: 'human', avatar: './images/human3.png', birthday: '2001-12-03', personality: '知性、善解人意', messages: [
+        { from: 'avatar', text: '你上次说想学画画，开始了吗？', time: '15:40' },
+        { from: 'me', text: '还没呢，最近有点忙。', time: '15:42' },
+        { from: 'avatar', text: '没关系，慢慢来。我可以陪你一起，先从简单的素描开始～', time: '15:43' }
       ]}
     ],
     notes: [
